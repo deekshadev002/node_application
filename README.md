@@ -1,17 +1,67 @@
-# simple-nodejs-app
+Node Application Deploy using Podman 
+======================================================================
 
-Simple-nodejs-app is a simple web application created using [Node.js](https://github.com/nodejs/node). It uses [MediaWiki - Wikipedia's Search API](https://www.mediawiki.org/wiki/API:Opensearch) to search for anything entered by the user and parses the result in a JSON format. The infobox of the Wikipedia page is parsed using [wiki-infobox-parser](https://github.com/0x333333/wiki-infobox-parser).
+Step 1. Clone the Repository
+Open your terminal and run:
+git clone https://github.com/rat9615/simple-nodejs-app.git 
+cd simple-nodejs-app
 
-## Download and Installation
 
-- Clone the repo ```https://github.com/rat9615/simple-nodejs-app```
-- [Fork, Clone or Download on Github](https://github.com/rat9615/simple-nodejs-app)
 
-## Usage
+Step 2. Install Dependencies
 
-- After installation, run ```npm install``` to download and install all the required dependencies.
-- Run ```npm start``` to run the web application.
 
-## Live Preview
 
-To view a live preview of this application, click [here](https://desolate-coast-53201.herokuapp.com/)
+node -v 
+npm -v
+
+Once you have Node.js and npm installed, install the project dependencies:
+npm install
+
+
+Step 3. Create  Dockerfile
+=================================================================
+FROM node
+WORKDIR /app
+
+# Copy package.json and package-lock.json first for better caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Define the command to run the application
+ENTRYPOINT ["npm", "start"]
+
+======================================================================
+
+
+
+
+
+Step 4. Build the Docker Image:
+podman build -t simple-nodejs-app .
+
+
+Step 5. Run the Podman Container:
+podman run -d -p 3000:3000 --name my-node-app simple-nodejs-app
+
+
+
+
+
+
+
+
+Step 6: Access the Application
+http://localhost:3000
+
+
+
+
