@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-application
+  labels:
+    app: node-application
+spec:
+  replicas: 3  # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: node-application
+  template:
+    metadata:
+      labels:
+        app: node-application
+    spec:
+      containers:
+      - name: node-application
+        image: deekshadev002/node_application_pipeline:latest  # Ensure to specify the correct tag if not using 'latest'
+        ports:
+        - containerPort: 3000  # Adjust based on your application's port
+        env:
+        - name: NODE_ENV
+          value: "production"  # Set environment variables as needed
+
